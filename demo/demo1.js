@@ -10,7 +10,7 @@ if( Detector.webgl ){
           antialias   : true, // to get smoother output
           preserveDrawingBuffer : true  // to allow screenshot
         });
-        renderer.setClearColor( 0xBBBBBB, 1 );
+        //renderer.setClearColor( 0xBBBBBB, 1 );
         renderer.setSize(window.innerWidth, window.innerHeight);
       }else{
         Detector.addGetWebGLMessage();
@@ -25,6 +25,8 @@ if( Detector.webgl ){
 
       // create a scene
       scene = new THREE.Scene();
+      var light = new THREE.AmbientLight( 0x404040 ); // soft white light
+      scene.add( light );
 
       // put a camera in the scene
       camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 1, 1000);
@@ -32,7 +34,8 @@ if( Detector.webgl ){
       scene.add(camera);
 
       // create a camera contol
-      cameraControls  = new THREEx.DragPanControls(camera);
+      //cameraControls  = new THREEx.DragPanControls(camera);
+      cameraControls  = new THREE.OrbitControls(camera);
 
       // transparently support window resize
       THREEx.WindowResize.bind(renderer, camera);
@@ -46,6 +49,8 @@ if( Detector.webgl ){
       var geometry = new THREE.CubeGeometry(1,1,1);
       var material = new THREE.MeshNormalMaterial() ;
       cube = new THREE.Mesh(geometry, material);
+      cube.rotation.x = 0.4;
+      cube.rotation.y = 0.4;
       scene.add(cube);
 }
 // animation loop
@@ -68,15 +73,6 @@ if( Detector.webgl ){
 
       // update camera controls
       cameraControls.update();
-      // animate the cube
-      cube.rotation.x += 0.02;
-      cube.rotation.y += 0.0225;
-      cube.rotation.z += 0.0175;
-      // make the cube bounce
-      var dtime = Date.now() - startTime;
-      cube.scale.x  = 1.0 + 0.3*Math.sin(dtime/300);
-      cube.scale.y  = 1.0 + 0.3*Math.sin(dtime/300);
-      cube.scale.z  = 1.0 + 0.3*Math.sin(dtime/300);
       // actually render the scene
       renderer.render( scene, camera );
     }
