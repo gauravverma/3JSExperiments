@@ -61,7 +61,16 @@ function init() {
 function LoadColladaFile(modelname, callback) {
     var loader = new THREE.ColladaLoader();
     loader.options.convertUpAxis = true;
-    loader.load( modelname+'.dae', callback );
+    var infoDom = document.getElementById('info');
+    var lDom = document.getElementById('lprogress');
+    var progressFn = function(progress){
+      var p = Math.floor(100*progress.loaded/progress.total);
+      lDom.innerHTML = p;
+      if(p == 100){
+        infoDom.style.display = "none";
+      }
+    };
+    loader.load(modelname+'.dae', callback, progressFn);
 }
 
 // animation loop

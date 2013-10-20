@@ -7,3 +7,11 @@ body {
 	font-family	: arial;
 	font-size	: 100%;
 }
+
+#info{
+left:200px;
+background-color: rgba(0,0,0,0.5);
+width:300px;
+position: absolute;
+text-align: center;
+}
